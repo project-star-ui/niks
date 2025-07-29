@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niko DelaCruz | Graphic & Multimedia Designer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS RESET & BASE STYLES */
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff00e6;
+            --dark: #0a0a14;
+            --light: #f0f0ff;
+            --accent: #5500ff;
+            --transition: all 0.3s cubic-bezier(0.25, 0.75, 0.5, 1.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* GLITCH EFFECT STYLES */
+        .glitch {
+            position: relative;
+        }
+
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch::before {
+            color: var(--secondary);
+            z-index: -1;
+            animation: glitch-effect 3s infinite;
+        }
+
+        .glitch::after {
+            color: var(--primary);
+            z-index: -2;
+            animation: glitch-effect 2s infinite reverse;
+        }
+
+        @keyframes glitch-effect {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%); }
+            50% { transform: translate(5px, 5px); opacity: 0; }
+            60% { transform: translate(5px, -5px); clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%); }
+            80% { transform: translate(-3px, 3px); }
+            100% { transform: translate(0); }
+        }
+
+        /* NAVIGATION STYLES */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 10, 20, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background-color: var(--light);
+            transition: var(--transition);
+        }
+
+        /* MAIN CONTENT SLIDER STYLES */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .slider {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: transform 1s ease-in-out;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10%;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slide-content {
+            max-width: 600px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-in-out;
+        }
+
+        .slide.active .slide-content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--light);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            color: var(--dark);
+            background: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .btn:hover::before {
+            left: 0;
+        }
+
+        /* ABOUT SECTION STYLES */
+        .about-section {
+            padding: 8rem 10%;
+            display: flex;
+            align-items: center;
+            gap: 5rem;
+            background: linear-gradient(to bottom, var(--dark) 0%, rgba(10, 10, 20, 0.9) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-image {
+            flex: 1;
+            position: relative;
+            min-height: 400px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .about-content {
+            flex: 1;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .about-text {
+            margin-bottom: 2rem;
+            color: rgba(240, 240, 255, 0.8);
+            font-size: 1.1rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .skill-tag:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        /* PORTFOLIO SECTION STYLES */
+        .portfolio-section {
+            padding: 8rem 10%;
+            background: rgba(10, 10, 20, 0.9);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            height: 300px;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .portfolio-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        .portfolio-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .portfolio-category {
+            font-size: 0.9rem;
+            color: var(--light);
+        }
+
+        /* CONTACT SECTION STYLES */
+        .contact-section {
+            padding: 8rem 10%;
+            background: linear-gradient(to bottom, rgba(10, 10, 20, 0.9) 0%, var(--dark) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 5rem;
+            margin-top: 3rem;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .contact-item:hover .contact-icon {
+            background: var(--primary);
+            color: var(--dark);
+            transform: rotate(15deg);
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.9rem;
+            color: rgba(240, 240, 255, 0.6);
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-value {
+            font-size: 1.1rem;
+            color: var(--light);
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(240, 240, 255, 0.1);
+            border: 1px solid rgba(240, 240, 255, 0.3);
+            color: var(--light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(0, 240, 255, 0.05);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+            color: var(--light);
+            box-shadow: 0 0 20px rgba(255, 0, 230, 0.5);
+        }
+
+        /* FOOTER STYLES */
+        footer {
+            padding: 3rem 10%;
+            background: var(--dark);
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(240, 240, 255, 0.1);
+            color: var(--light);
+            font-size: 1.3rem;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            font-size: 0.9rem;
+            color: rgba(240, 240, 255, 0.6);
+        }
+
+        /* RESPONSIVE STYLES */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .about-section {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            
+            .about-image {
+                min-height: 300px;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(10, 10, 20, 0.95);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: var(--transition);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .menu-toggle {
+                display: flex;
+                z-index: 1001;
+            }
+            
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+                letter-spacing: 3px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* GLITCH TRANSITION EFFECT */
+        .glitch-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 9999;
+            pointer-events: none;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .glitch-line {
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            animation: glitch-line-animation 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+            transform-origin: left;
+            box-shadow: 0 0 10px var(--primary), 
+                        0 0 20px var(--secondary);
+        }
+
+        @keyframes glitch-line-animation {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            40% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            60% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 0.1; }
+            10%, 60% { opacity: 0.15; }
+            20%, 50% { opacity: 0.2; }
+            30%, 40% { opacity: 0.25; }
+        }
+    </style>
+</head>
+<body>
+    <div class="glitch-transition" id="glitchTransition"></div>
+
+    <nav>
+        <a href="#" class="logo">NIKO<span style="color: var(--secondary)">DC</span></a>
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links" id="navLinks">
+            <a href="#home" class="nav-link">Home</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#portfolio" class="nav-link">Portfolio</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+    </nav>
+
+    <div class="slider-container" id="home">
+        <div class="slider">
+            <div class="slide active" style="background-image: linear-gradient(rgba(10, 10, 20, 0.7), rgba(10, 10, 20, 0.7))">
+                <div class="slide-content">
+                    <h1 class="hero-title glitch" data-text="NIKO DELACRUZ">NIKO DELACRUZ</h1>
+                    <p class="hero-subtitle">Graphic & Multimedia Designer</p>
+                    <a href="#portfolio" class="btn">View My Work</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(10, 10, 20, 0.7), rgba(10, 10, 20, 0.7))">
+                <div class="slide-content">
+                    <h1 class="hero-title glitch" data-text="CREATIVE VISIONS">CREATIVE VISIONS</h1>
+                    <p class="hero-subtitle">Bringing ideas to life with stunning visuals</p>
+                    <a href="#portfolio" class="btn">Explore Projects</a>
+                </div>
+            </div>
+            <div class="slide" style="background-image: linear-gradient(rgba(10, 10, 20, 0.7), rgba(10, 10, 20, 0.7))">
+                <div class="slide-content">
+                    <h1 class="hero-title glitch" data-text="DIGITAL STORYTELLING">DIGITAL STORYTELLING</h1>
+                    <p class="hero-subtitle">Captivating audiences through design</p>
+                    <a href="#contact" class="btn">Let's Connect</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="about-section" id="about" style="display: none;">
+        <div class="about-image">
+            <img src="assets/img/niko.jpg" alt="Niko DelaCruz working on computer with design software">
+        </div>
+        <div class="about-content">
+            <h2 class="section-title">About Me</h2>
+            <p class="about-text">
+                Hi, I'm Niko DelaCruz, a passionate Graphic & Multimedia Designer based in Tondo, Philippines. 
+                With over 5 years of experience in digital design, I specialize in creating visually stunning 
+                and effective designs that communicate brand messages and captivate audiences.
+            </p>
+            <p class="about-text">
+                My approach combines technical expertise with creative problem-solving to deliver 
+                designs that are not only aesthetically pleasing but also strategically effective. 
+                I'm constantly pushing boundaries and exploring new design trends to keep my work fresh and innovative.
+            </p>
+            <div class="skills-container">
+                <span class="skill-tag">Graphic Design</span>
+                <span class="skill-tag">UI/UX</span>
+                <span class="skill-tag">Motion Graphics</span>
+                <span class="skill-tag">Branding</span>
+                <span class="skill-tag">Illustration</span>
+                <span class="skill-tag">Photo Manipulation</span>
+                <span class="skill-tag">HTML/CSS</span>
+                <span class="skill-tag">Adobe Creative Suite</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="portfolio-section" id="portfolio" style="display: none;">
+        <h2 class="section-title">Recent Work</h2>
+        <div class="portfolio-grid">
+            <div class="portfolio-item">
+                <img src="assets/img/ambush.jpg" alt="Modern branding project with vibrant geometric patterns" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Nebula Tech Branding</h3>
+                    <p class="portfolio-category">Brand Identity</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/img/mapasakin.jpg" alt="Modern app interface design with colorful UI elements" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">FinViz App UI</h3>
+                    <p class="portfolio-category">UI/UX Design</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/img/lli.jpg" alt="Metropolitan magazine cover design featuring futuristic cityscape illustration" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Metropolitan Magazine</h3>
+                    <p class="portfolio-category">Editorial Design</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/img/anino.jpg" alt="Data visualization infographic with charts and diagrams" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Data Visualization</h3>
+                    <p class="portfolio-category">Infographic</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/img/makananukangluguran.jpg" alt="Modern album cover design with vibrant artwork" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Cyberpunk Album Art</h3>
+                    <p class="portfolio-category">Music Packaging</p>
+                </div>
+            </div>
+            <div class="portfolio-item">
+                <img src="assets/img/roseanne.jpg" alt="Social media graphics with modern design elements" class="portfolio-image">
+                <div class="portfolio-overlay">
+                    <h3 class="portfolio-title">Social Media Campaign</h3>
+                    <p class="portfolio-category">Digital Marketing</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact" style="display: none;">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <p class="contact-label">EMAIL</p>
+                        <p class="contact-value">hello@nikodelacruz.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <p class="contact-label">PHONE</p>
+                        <p class="contact-value">+63 912 345 6789</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <p class="contact-label">LOCATION</p>
+                        <p class="contact-value">Tondo, Manila, Philippines</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <p class="contact-label">WORKING HOURS</p>
+                        <p class="contact-value">Mon-Fri: 9AM - 6PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Subject">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="#" class="social-link"><i class="fab fa-behance"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-dribbble"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+        </div>
+        <p class="copyright">© 2025 Niko DelaCruz. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Hide all sections first
+                    document.querySelectorAll('section').forEach(section => {
+                        section.style.display = 'none';
+                    });
+                    
+                    // Show target section
+                    targetElement.style.display = 'block';
+                    
+                    // Trigger glitch transition
+                    triggerGlitchTransition();
+                    
+                    // Delay scroll to allow transition to play
+                    setTimeout(() => {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }, 800); // Match this with transition duration
+                }
+            });
+        });
+
+        // Slider functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            showSlide(currentSlide);
+        }
+
+        // Auto slide change every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // Glitch transition effect
+        const glitchTransition = document.getElementById('glitchTransition');
+
+        function triggerGlitchTransition() {
+            // Reset and show transition
+            glitchTransition.innerHTML = '';
+            glitchTransition.style.display = 'flex';
+            
+            // Create 10 glitch lines with random delays and heights
+            for (let i = 0; i < 10; i++) {
+                const line = document.createElement('div');
+                line.className = 'glitch-line';
+                line.style.animationDelay = `${i * 0.1 + Math.random()*0.3}s`;
+                line.style.height = `${2 + Math.random()*3}px`;
+                glitchTransition.appendChild(line);
+            }
+            
+            // Add noise overlay
+            const noiseOverlay = document.createElement('div');
+            noiseOverlay.style.position = 'absolute';
+            noiseOverlay.style.width = '100%';
+            noiseOverlay.style.height = '100%';
+            noiseOverlay.style.background = `
+                linear-gradient(rgba(0, 240, 255, 0.1), rgba(255, 0, 230, 0.1)),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="white" opacity="0.1" width="1" height="1" x="5" y="5"/></svg>')`;
+            noiseOverlay.style.opacity = '0';
+            noiseOverlay.style.animation = 'flicker 0.5s linear forwards';
+            glitchTransition.appendChild(noiseOverlay);
+            
+            // Hide transition after animation completes
+            setTimeout(() => {
+                glitchTransition.style.display = 'none';
+            }, 1200);
+        }
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! Niko will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // Initialize first slide
+        showSlide(currentSlide);
+
+        // Trigger transition on page load
+        window.addEventListener('load', triggerGlitchTransition);
+    </script>
+</body>
+</html>
